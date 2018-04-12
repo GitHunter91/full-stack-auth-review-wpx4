@@ -35,9 +35,9 @@
   * user controller
 * index
   * routes
-    * /profile
+    * /api/profile
     * /auth/callback
-    * /logout
+    * /api/logout
 
 * queries
   * create user
@@ -58,3 +58,12 @@
     * name
     * email
     * picture
+
+## External
+
+* .env
+  * connection string
+  * auth0 domain
+  * auth0 client id
+  * auth0 client secret
+  * session secret
