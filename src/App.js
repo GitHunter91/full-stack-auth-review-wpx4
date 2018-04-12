@@ -5,18 +5,15 @@ import axios from 'axios';
 import Login from './Components/Login';
 import Profile from './Components/Profile';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login, logout } from './ducks/reducer';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      user: null,
-    };
-  }
-
   componentDidMount() {
     axios.get('/api/profile').then(response => {
-      this.setState({ user: response.data.user });
+      if (response.data.user) {
+        this.props.login(response.data.user);
+      }
     });
   }
 
@@ -29,11 +26,20 @@ class App extends Component {
     return (
       <div className="app">
         <Route path="/profile" component={Profile} />
-        <img src={logo} className="logo" alt="logo" />
-        <Login login={this.login} />
+        <Route path="/" exact render={() => (
+          <div>
+            <img src={logo} className="logo" alt="logo" />
+            <Login login={this.login} />
+          </div>
+        )} />
       </div>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = {
+  login,
+  logout,
+};
+
+export default connect(null, mapDispatchToProps)(App);
